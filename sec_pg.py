@@ -2,9 +2,12 @@
 from tkinter import *
 from tkinter import messagebox
 from PIL import ImageTk,Image
-import mysql.connector as c
-con=c.connect(host='localhost',user='root',passwd='achuadivava@1438',database='airinfo')
-x=con.cursor()
+import sqlite3
+
+# Connecting to SQLite database
+con = sqlite3.connect('airinfo.db')
+x = con.cursor()
+
 def nxt():
     u=user.get()
     p=passw.get()
@@ -34,9 +37,10 @@ def nxt():
         Label(m,text='Select Department',fg='white',bg='#191970',font=('',50)).pack()
         Button(m,text="HR",command=hr_pg,font=('',40),relief='solid').pack(ipadx=130,pady=150)
         Button(m, text="Sales",command=sales_pg,font=('',40),relief='solid').pack(ipadx=100)
+
 #CREATING NEW WINDOW
 m=Tk()
-m.state('zoomed')
+m.attributes('-fullscreen',True)
 m.config(bg='#191970')
 user_label=Label(m,text='Username',fg='white',bg='#191970',font=('','20'))
 user_label.pack(pady=30)

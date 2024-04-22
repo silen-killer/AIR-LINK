@@ -3,12 +3,16 @@ from tkinter import *
 from tkinter import ttk,messagebox
 from tkcalendar import Calendar
 import graphit
-import mysql.connector as c
-con=c.connect(host='localhost',user='root',passwd='achuadivava@1438',database='airinfo')
-x=con.cursor()
-SALEs=Tk()
+import sqlite3
+
+# Connecting to SQLite database
+con = sqlite3.connect('airinfo.db')
+x = con.cursor()
+
+SALEs = Tk()
 SALEs.config(bg='#191970')
-SALEs.state('zoomed')
+SALEs.attributes('-fullscreen',True)
+
 #TO EXIT THE PROGRAM
 def end():
     mb=messagebox.askquestion('quit','Are you sure that you want to quit')
@@ -37,7 +41,7 @@ def _0():
                 x.execute(query1)
                 con.commit()
                 S.destroy()
-                SALEs.state('zoomed')
+                SALEs.attributes('-fullscreen',True)
         transno_label.destroy(),trans_no.destroy(),inc_label.destroy()
         inc.destroy(),flt_label.destroy(),flt.destroy()
         date_label=Label(S,text='Date',fg='white',bg='#191970',font=('',40))
@@ -47,7 +51,7 @@ def _0():
         btn.config(text='Submit',command=submit)
         SALEs.state('withdraw')
     S=Tk()
-    S.state('zoomed')
+    S.attributes('-fullscreen',True)
     S.config(bg='#191970')
     transno_label=Label(S,text='Transaction No',fg='white',bg='#191970',font=('',40))
     transno_label.place(relx=0.025,rely=0.02)
@@ -67,6 +71,7 @@ def _0():
     flt.pack(anchor='e',padx=10,pady=30)
     btn=Button(S,text='CONTINUE',font=('',40),command=nxt,relief='solid')
     btn.place(rely=0.85,relx=0.4)
+
 #Modify the sales of a particular transaction number
 def _1():
     def submit():
@@ -86,7 +91,7 @@ def _1():
             messagebox.showinfo('Success','Modified Successfully')
             modify.destroy()
     modify=Tk()
-    modify.state('zoomed')
+    modify.attributes('-fullscreen',True)
     modify.config(bg='#191970')
     l2=Label(modify,text='Modify the Sales of a Particular Transaction Number',font=('',40),fg='white',bg='#191970')
     l2.pack(fill='x')
@@ -100,16 +105,17 @@ def _1():
     inc.pack(anchor='ne',padx=100)
     b=Button(modify,text='SUBMIT',font=('',40),command=submit,relief='solid')
     b.pack(side='bottom')
+
 #Get the total sales of the year of
 #         i.a flight            ii.airlink Infotech
 def _2():
     sales=Tk()
     sales.config(bg='#191970')
-    sales.state('zoomed')
+    sales.attributes('-fullscreen',True)
     def flight():  #Of flight
         F=Tk()
         F.config(bg='#191970')
-        F.state('zoomed')
+        F.attributes('-fullscreen',True)
         def nxt():
             f=flt.get()
             ye=yer.get()
@@ -146,7 +152,7 @@ def _2():
     def airlink():  #Of Airlink Infotech
         airlink=Tk()
         airlink.config(bg='#191970')
-        airlink.state('zoomed')
+        airlink.attributes('-fullscreen',True)
         def nxt():
             year=yer.get()
             if year=='':
@@ -175,11 +181,12 @@ def _2():
     b1.pack(pady=100,ipadx=90)
     b2=Button(sales,text='Of Airlink Infotech',font=('',40),command=airlink,relief='solid')
     b2.pack()
+
 #Compare year's sales of different flights through graphs
 def _3():
     YR=Tk()
     YR.config(bg='#191970')
-    YR.state('zoomed')
+    YR.attributes('-fullscreen',True)
     def nxt():
         yr=yer.get()
         if yr=='':
@@ -218,10 +225,11 @@ def _3():
     yer.pack()
     b1=Button(YR,text='SUBMIT',font=('',40),command=nxt,relief='solid')
     b1.pack(side='bottom',pady=20)
+
 #Dispaly the sales database
 def _4():
     db=Tk()
-    db.state('zoomed')
+    db.attributes('-fullscreen',True)
     query="select * from sales"
     x.execute(query)
     y=x.fetchall()
@@ -246,6 +254,7 @@ def _4():
         l4=Label(db,text=i[3],font=('',20),borderwidth=2,relief='ridge')
         l4.place(rely=j,relx=0.78,relwidth=0.21)
         j+=0.06
+
 #Review the sales of a particular month
 def _5():
     m=Tk()
@@ -259,12 +268,12 @@ def _5():
         y=x.fetchall()
         sum1=0
         new=Tk()
-        new.state('zoomed')
+        new.attributes('-fullscreen',True)
         new.config(bg='#191970')
         for i in y:
             sum1+=i[0]
         Label(new,text="The sale made by "+str(c)+" in "+str(l[a])+" of\n"+str(b)+" is ₹"+str(sum1),font=('',40),fg='white',bg='#191970').pack()
-    m.state('zoomed')
+    m.attributes('-fullscreen',True)
     m.config(bg='#191970')
     mon=Label(m,text='Select the month',fg='white',bg='#191970',font=('',30))
     mon.place(relx=0.2)
@@ -288,16 +297,17 @@ def _5():
     box.insert(2,l1[2])
     cont=Button(m,text='CONTINUE',font=('',40),command=show,relief='solid')
     cont.pack(side='bottom')
+
 #Display the flight with the highest sales in a
 #               i.Month         ii.Year 
 def _6():
     sales=Tk()
     sales.config(bg='#191970')
-    sales.state('zoomed')
+    sales.attributes('-fullscreen',True)
     def flight():  #Month
         F=Tk()
         F.config(bg='#191970')
-        F.state('zoomed')
+        F.attributes('-fullscreen',True)
         def nxt():
             f=l.index(month.get())
             ye=yr.get()
@@ -327,7 +337,7 @@ def _6():
     def airlink():  #Year
         F=Tk()
         F.config(bg='#191970')
-        F.state('zoomed')
+        F.attributes('-fullscreen',True)
         def nxt():
             ye=yr.get()
             L.destroy(),yr_label.destroy(),yr.destroy(),b1.destroy(),b2.destroy()
@@ -351,16 +361,17 @@ def _6():
     b1.pack(pady=100)
     b2=Button(sales,text='Year',font=('',40),command=airlink,relief='solid')
     b2.pack(ipadx=15)
+
 #Airline sales comparison with graphs
 def _7():
     tot=Tk()
-    tot.state('zoomed')
+    tot.attributes('-fullscreen',True)
     tot.config(bg='#191970')
     def nxt():
         yer=yr.get()
         mn=l.index(month.get())
         TOT=Tk()
-        TOT.state('zoomed')
+        TOT.attributes('-fullscreen',True)
         TOT.config(bg='#191970')
         def pie():
             graphit.piechart(list1,list2)
@@ -400,6 +411,7 @@ def _7():
     yr.pack(padx=200,pady=100,anchor='ne')
     b1=Button(tot,text='NEXT',font=('',40),command=nxt,relief='solid')
     b1.pack(side='bottom')
+
 def home():
     SALEs.destroy()
     import First_pg

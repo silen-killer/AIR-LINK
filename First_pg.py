@@ -1,22 +1,26 @@
 #First_pg.py
 from tkinter import *
 from tkinter import messagebox
-import mysql.connector as c
-con=c.connect(host='localhost',user='root',passwd='achuadivava@1438',database='airinfo')
-x=con.cursor()
-#CREATING TKINTER WINDOW
+import sqlite3
+
+# Connecting to SQLite database
+con = sqlite3.connect('airinfo.db')
+x = con.cursor()
+
+# CREATING TKINTER WINDOW
 main=Tk()
-main.state('zoomed')
+main.attributes('-fullscreen',True)
 main.config(bg='#191970')
 b1=Button(main,text='AirLink InfoTech',font=('Times Roman Bold',60))
 b1.pack(pady=100)
+
 #COMMAND FOR NEXT PAGE
 def _1():
     def nxt():
         u=user.get()
         p=passw.get()
-        query='select emp_no from salespass where usern="{}" and passw="{}"'.format(u,p)
-        query1='select emp_no from hrpass where usern="{}" and passw="{}"'.format(u,p)
+        query='select emp_no from salespass where username="{}" and password="{}"'.format(u,p)
+        query1='select emp_no from hrpass where username="{}" and password="{}"'.format(u,p)
         x.execute(query)
         f=x.fetchone()
         x.execute(query1)
@@ -43,7 +47,7 @@ def _1():
             Button(m, text="Sales",command=sales_pg,font=('',40),relief='solid').pack(ipadx=100)
     main.destroy()
     m=Tk()
-    m.state('zoomed')
+    m.attributes('-fullscreen',True)
     m.config(bg='#191970')
     user_label=Label(m,text='USERNAME',fg='white',bg='#191970',font=('','20'))
     user_label.pack(pady=30)
@@ -56,11 +60,13 @@ def _1():
     btn=Button(m,text='NEXT',font=('',40),relief='solid',command=nxt)
     btn.pack(pady=30)
     m.mainloop()
+
 #COMMAND TO QUIT THE PROGRAM
 def quit_pg():
     mb=messagebox.askquestion('quit','Are you sure that you want to quit')
     if mb=='yes':
         main.destroy()
+
 #CREATING BUTTONS 
 b2=Button(main,text='ENTER',font=('',30),command=_1,relief='solid')
 b2.place(relx=0.85,rely=0.8)

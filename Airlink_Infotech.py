@@ -1,8 +1,10 @@
 import sys
 import graphit
-import mysql.connector as c
-con=c.connect(host='localhost',user='root',passwd='achuadivava@1438',database='airinfo')
-x=con.cursor()
+import sqlite3
+
+# Connecting to SQLite database
+con = sqlite3.connect('airinfo.db')
+x = con.cursor()
 
 #User Defined Functions for HR department
 
@@ -85,7 +87,7 @@ if ch==1:
     while True:
         usern=input("Please enter your username: ")
         passw=input("Please enter your password: ")
-        query='select * from hrpass where usern="{}" and passw="{}"'.format(usern,passw)
+        query='select * from hrpass where username="{}" and password="{}"'.format(usern,passw)
         x.execute(query)
         y=x.fetchall()
         if y:
@@ -196,7 +198,7 @@ elif ch==2:
     while True:
         usern=input("Please enter your username: ")
         passw=input("Please enter your password: ")
-        query='select * from salespass where usern="{}" and passw ="{}"'.format(usern,passw)
+        query='select * from salespass where username="{}" and password="{}"'.format(usern,passw)
         x.execute(query)
         y=x.fetchall()
         if y:

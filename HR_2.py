@@ -1,13 +1,15 @@
 #HR_2.py
 from tkinter import *
 from tkinter import ttk,messagebox
-import mysql.connector as c
-#CONNECTING MYSQL
-con=c.connect(host='localhost',user='root',passwd='achuadivava@1438',database='airinfo')
-x=con.cursor()
-#CREATING NEW WINDOW
+import sqlite3
+
+# Connecting to SQLite database
+con = sqlite3.connect('airinfo.db')
+x = con.cursor()
+
+# CREATING NEW WINDOW
 HR=Tk()
-HR.state('zoomed')
+HR.attributes('-fullscreen',True)
 HR.config(bg='#191970')
 #TO EXIT THE PROGRAM
 def end():
@@ -22,7 +24,7 @@ def nxt():
     ch=lb.index(lb.curselection())
     def bck():
         hr.destroy()
-        HR.state('zoomed')
+        HR.attributes('-fullscreen',True)
 #TO ADD AN EMPLOYEE
     if ch==0:
         def nxt():
@@ -43,7 +45,7 @@ def nxt():
                         x.execute(query3)
                         con.commit()        #INSERTING THE DATA INTO SALESPASS TABLE
                     mb=messagebox.showinfo('','Added successfully')
-                    HR.state('zoomed')
+                    HR.attributes("-fullscreen",True)
             emp_id=empid.get()            #EMPLOYEE ID
             emp_nm=empnm.get()       #EMPLOYEE NAME
             dpt=(dept.get()).lower()        #DEPARTMENT
@@ -77,7 +79,7 @@ def nxt():
                 add.place(relx=0.85,rely=0.8)
         HR.state('withdraw')
         hr=Tk()
-        hr.state('zoomed')
+        hr.attributes("-fullscreen",True)
         hr.config(bg='#191970')
         LABEL=Label(hr,text='Add Employee',fg='white',bg='#191970',font=('',40))
         LABEL.place(x=0,y=0,relwidth=1)
@@ -136,7 +138,7 @@ def nxt():
                     mb=messagebox.showinfo('','Deleted successfully')
         HR.state('withdraw')
         hr=Tk()
-        hr.state('zoomed')
+        hr.attributes("-fullscreen",True)
         hr.config(bg='#191970')
         LABEL=Label(hr,text='Delete Employee',fg='white',bg='#191970',font=('Times Roman',40))
         LABEL.place(x=0,y=0,relwidth=1)
@@ -159,7 +161,7 @@ def nxt():
 #Displaying the employee database
     if ch==2:
         hr=Tk()
-        hr.state('zoomed')
+        hr.attributes("-fullscreen",True)
         L=Label(hr,text='EMPLOYEE DATABASE',font=('',40))
         L.place(relwidth=1)
         L1=Label(hr,text='Employee ID',font=('',40),borderwidth=2,relief='solid')
@@ -202,7 +204,7 @@ def nxt():
                 mb=messagebox.showinfo('','Upadated successfully')
         HR.state('withdraw')
         hr=Tk()
-        hr.state('zoomed')
+        hr.attributes("-fullscreen",True)
         hr.config(bg='#191970')
         LABEL=Label(hr,text='Update Salary Package',fg='white',bg='#191970',font=('Times Roman',40))
         LABEL.place(x=0,y=0,relwidth=1)
